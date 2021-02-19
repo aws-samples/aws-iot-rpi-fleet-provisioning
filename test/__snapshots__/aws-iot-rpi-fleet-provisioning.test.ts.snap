@@ -3,24 +3,24 @@
 exports[`snapshot test fleet provisioning stack 1`] = `
 Object {
   "Outputs": Object {
-    "ThingsProvisioningArtifactsBucketName": Object {
+    "RpiImageBucketName": Object {
       "Description": "Download the raspbian image from this S3 bucket",
       "Value": Object {
-        "Ref": "ProvisioningArtifactsBucket9E4218B1",
+        "Ref": "RpiImageOutputBucketC16CAC8A",
       },
     },
   },
   "Parameters": Object {
-    "AssetParameters6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1dArtifactHashF313FF3A": Object {
-      "Description": "Artifact hash for asset \\"6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1d\\"",
+    "AssetParameters905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133ArtifactHashF51B7FAA": Object {
+      "Description": "Artifact hash for asset \\"905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133\\"",
       "Type": "String",
     },
-    "AssetParameters6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1dS3Bucket261499BD": Object {
-      "Description": "S3 bucket for asset \\"6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1d\\"",
+    "AssetParameters905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133S3BucketAE038D3F": Object {
+      "Description": "S3 bucket for asset \\"905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133\\"",
       "Type": "String",
     },
-    "AssetParameters6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1dS3VersionKeyCF8B7304": Object {
-      "Description": "S3 key for asset version \\"6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1d\\"",
+    "AssetParameters905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133S3VersionKeyC8B59851": Object {
+      "Description": "S3 key for asset version \\"905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133\\"",
       "Type": "String",
     },
     "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cArtifactHash627DAAA7": Object {
@@ -35,16 +35,16 @@ Object {
       "Description": "S3 key for asset version \\"c691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49c\\"",
       "Type": "String",
     },
-    "AssetParameterse32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7bArtifactHash0B076C34": Object {
-      "Description": "Artifact hash for asset \\"e32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7b\\"",
+    "AssetParametersfa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7ArtifactHash028A95C7": Object {
+      "Description": "Artifact hash for asset \\"fa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7\\"",
       "Type": "String",
     },
-    "AssetParameterse32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7bS3Bucket6B889BA7": Object {
-      "Description": "S3 bucket for asset \\"e32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7b\\"",
+    "AssetParametersfa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7S3Bucket769C4375": Object {
+      "Description": "S3 bucket for asset \\"fa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7\\"",
       "Type": "String",
     },
-    "AssetParameterse32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7bS3VersionKey09370F35": Object {
-      "Description": "S3 key for asset version \\"e32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7b\\"",
+    "AssetParametersfa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7S3VersionKeyDE2B75FE": Object {
+      "Description": "S3 key for asset version \\"fa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7\\"",
       "Type": "String",
     },
   },
@@ -157,16 +157,530 @@ Object {
       },
       "Type": "AWS::IoT::Policy",
     },
-    "CreateRPIImageD7D4E5DA": Object {
+    "BuildRpiImagePipelineAC9DAF7F": Object {
+      "DependsOn": Array [
+        "BuildRpiImagePipelineRoleDefaultPolicyEC568D69",
+        "BuildRpiImagePipelineRole6C10218D",
+      ],
+      "Properties": Object {
+        "ArtifactStore": Object {
+          "Location": Object {
+            "Ref": "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
+          },
+          "Type": "S3",
+        },
+        "RestartExecutionOnUpdate": true,
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "BuildRpiImagePipelineRole6C10218D",
+            "Arn",
+          ],
+        },
+        "Stages": Array [
+          Object {
+            "Actions": Array [
+              Object {
+                "ActionTypeId": Object {
+                  "Category": "Source",
+                  "Owner": "AWS",
+                  "Provider": "S3",
+                  "Version": "1",
+                },
+                "Configuration": Object {
+                  "S3Bucket": Object {
+                    "Ref": "rpiImageBuilderSourceBucket3B1B047A",
+                  },
+                  "S3ObjectKey": "rpi-image-builder.zip",
+                },
+                "Name": "Source",
+                "OutputArtifacts": Array [
+                  Object {
+                    "Name": "Artifact_Source_Source",
+                  },
+                ],
+                "RoleArn": Object {
+                  "Fn::GetAtt": Array [
+                    "BuildRpiImagePipelineSourceCodePipelineActionRoleDD9FB482",
+                    "Arn",
+                  ],
+                },
+                "RunOrder": 1,
+              },
+            ],
+            "Name": "Source",
+          },
+          Object {
+            "Actions": Array [
+              Object {
+                "ActionTypeId": Object {
+                  "Category": "Build",
+                  "Owner": "AWS",
+                  "Provider": "CodeBuild",
+                  "Version": "1",
+                },
+                "Configuration": Object {
+                  "ProjectName": Object {
+                    "Ref": "BuildRpiImageProject8E27C755",
+                  },
+                },
+                "InputArtifacts": Array [
+                  Object {
+                    "Name": "Artifact_Source_Source",
+                  },
+                ],
+                "Name": "BuildRpiImage",
+                "OutputArtifacts": Array [
+                  Object {
+                    "Name": "Artifact_BuildRpiImage_BuildRpiImage",
+                  },
+                ],
+                "RoleArn": Object {
+                  "Fn::GetAtt": Array [
+                    "BuildRpiImagePipelineBuildRpiImageCodePipelineActionRole1796EDA5",
+                    "Arn",
+                  ],
+                },
+                "RunOrder": 1,
+              },
+            ],
+            "Name": "BuildRpiImage",
+          },
+          Object {
+            "Actions": Array [
+              Object {
+                "ActionTypeId": Object {
+                  "Category": "Deploy",
+                  "Owner": "AWS",
+                  "Provider": "S3",
+                  "Version": "1",
+                },
+                "Configuration": Object {
+                  "BucketName": Object {
+                    "Ref": "RpiImageOutputBucketC16CAC8A",
+                  },
+                  "Extract": "false",
+                },
+                "InputArtifacts": Array [
+                  Object {
+                    "Name": "Artifact_BuildRpiImage_BuildRpiImage",
+                  },
+                ],
+                "Name": "StoreRpiImage",
+                "RoleArn": Object {
+                  "Fn::GetAtt": Array [
+                    "BuildRpiImagePipelineStoreRpiImageCodePipelineActionRole153F34F1",
+                    "Arn",
+                  ],
+                },
+                "RunOrder": 1,
+              },
+            ],
+            "Name": "StoreRpiImage",
+          },
+        ],
+      },
+      "Type": "AWS::CodePipeline::Pipeline",
+    },
+    "BuildRpiImagePipelineArtifactsBucketC0B23EB0": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
+            Object {
+              "ServerSideEncryptionByDefault": Object {
+                "SSEAlgorithm": "aws:kms",
+              },
+            },
+          ],
+        },
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "BuildRpiImagePipelineBuildRpiImageCodePipelineActionRole1796EDA5": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":root",
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "BuildRpiImagePipelineBuildRpiImageCodePipelineActionRoleDefaultPolicy3651F2DE": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "codebuild:BatchGetBuilds",
+                "codebuild:StartBuild",
+                "codebuild:StopBuild",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "BuildRpiImageProject8E27C755",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "BuildRpiImagePipelineBuildRpiImageCodePipelineActionRoleDefaultPolicy3651F2DE",
+        "Roles": Array [
+          Object {
+            "Ref": "BuildRpiImagePipelineBuildRpiImageCodePipelineActionRole1796EDA5",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "BuildRpiImagePipelineRole6C10218D": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "codepipeline.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "BuildRpiImagePipelineRoleDefaultPolicyEC568D69": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "BuildRpiImagePipelineSourceCodePipelineActionRoleDD9FB482",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "BuildRpiImagePipelineBuildRpiImageCodePipelineActionRole1796EDA5",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "BuildRpiImagePipelineStoreRpiImageCodePipelineActionRole153F34F1",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "BuildRpiImagePipelineRoleDefaultPolicyEC568D69",
+        "Roles": Array [
+          Object {
+            "Ref": "BuildRpiImagePipelineRole6C10218D",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "BuildRpiImagePipelineSourceCodePipelineActionRoleDD9FB482": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":root",
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "BuildRpiImagePipelineSourceCodePipelineActionRoleDefaultPolicyE263AC18": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "rpiImageBuilderSourceBucket3B1B047A",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "rpiImageBuilderSourceBucket3B1B047A",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "BuildRpiImagePipelineSourceCodePipelineActionRoleDefaultPolicyE263AC18",
+        "Roles": Array [
+          Object {
+            "Ref": "BuildRpiImagePipelineSourceCodePipelineActionRoleDD9FB482",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "BuildRpiImagePipelineStoreRpiImageCodePipelineActionRole153F34F1": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":root",
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "BuildRpiImagePipelineStoreRpiImageCodePipelineActionRoleDefaultPolicyD2A609DB": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "RpiImageOutputBucketC16CAC8A",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "RpiImageOutputBucketC16CAC8A",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "BuildRpiImagePipelineStoreRpiImageCodePipelineActionRoleDefaultPolicyD2A609DB",
+        "Roles": Array [
+          Object {
+            "Ref": "BuildRpiImagePipelineStoreRpiImageCodePipelineActionRole153F34F1",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "BuildRpiImageProject8E27C755": Object {
       "Properties": Object {
         "Artifacts": Object {
-          "Location": Object {
-            "Ref": "ProvisioningArtifactsBucket9E4218B1",
-          },
-          "Name": "aws-raspbian.zip",
-          "NamespaceType": "BUILD_ID",
-          "Packaging": "ZIP",
-          "Type": "S3",
+          "Type": "CODEPIPELINE",
         },
         "EncryptionKey": "alias/aws/s3",
         "Environment": Object {
@@ -178,7 +692,7 @@ Object {
         },
         "ServiceRole": Object {
           "Fn::GetAtt": Array [
-            "CreateRPIImageRole06E6A7A9",
+            "BuildRpiImageProjectRole25C801ED",
             "Arn",
           ],
         },
@@ -190,11 +704,7 @@ Object {
       \\"SSH_PUBLIC_KEY\\": \\"ssh-rsa ....\\",
       \\"WIFI_SSID\\": \\"samplewifi\\",
       \\"WIFI_COUNTRY\\": \\"US\\",
-      \\"ARTIFACT_IMAGE_NAME\\": \\"aws-raspbian.img\\",
-      \\"RASPBIAN_DOWNLOAD_FILENAME\\": \\"raspbian_image.zip\\",
-      \\"RASPBIAN_SOURCE_URL\\": \\"https://downloads.raspberrypi.org/raspbian_latest\\",
-      \\"RASPBIAN_URL_BASE\\": \\"https://downloads.raspberrypi.org/raspbian/images/\\",
-      \\"SDCARD_MOUNT\\": \\"/mnt/sdcard\\"
+      \\"ARTIFACT_IMAGE_NAME\\": \\"aws-raspbian.img\\"
     },
     \\"secrets-manager\\": {
       \\"WIFI_PASSWORD\\": \\"RPI_WIFI_PASSWORD\\"
@@ -207,43 +717,9 @@ Object {
         \\"apt-get -y install p7zip-full wget libxml2-utils kpartx\\"
       ]
     },
-    \\"pre_build\\": {
-      \\"commands\\": [
-        \\"wget $RASPBIAN_SOURCE_URL -O $RASPBIAN_DOWNLOAD_FILENAME\\",
-        \\"VERSION=\\\\\\"$( wget -q $RASPBIAN_URL_BASE -O - | xmllint --html --xmlout --xpath 'string(/html/body/table/tr[last()-1]/td/a/@href)' - )\\\\\\"\\",
-        \\"RASPBIAN_SOURCE_SHA256_FILE=$( wget -q $RASPBIAN_URL_BASE/$VERSION -O - | xmllint --html --xmlout --xpath 'string(/html/body/table/tr/td/a[contains(@href, \\\\\\"256\\\\\\")])' - )\\",
-        \\"RASPBIAN_SOURCE_SHA256=$( wget -q \\\\\\"$RASPBIAN_URL_BASE/$VERSION/$RASPBIAN_SOURCE_SHA256_FILE\\\\\\" -O - | awk '{print $1}' )\\",
-        \\"RASPBIAN_DOWNLOAD_SHA256=$( sha256sum $RASPBIAN_DOWNLOAD_FILENAME |awk '{printf $1}' )\\",
-        \\"if [ ! -z $RASPBIAN_SOURCE_SHA256 ] && [ \\\\\\"$RASPBIAN_DOWNLOAD_SHA256\\\\\\" != \\\\\\"$RASPBIAN_SOURCE_SHA256\\\\\\" ]; then echo \\\\\\"Build aborted.  SHA256 does not match\\\\\\"; exit 2; fi\\",
-        \\"7z x -y $RASPBIAN_DOWNLOAD_FILENAME\\",
-        \\"EXTRACTED_IMAGE=$( 7z l $RASPBIAN_DOWNLOAD_FILENAME | awk '/-raspbian-/ {print $NF}' )\\"
-      ]
-    },
     \\"build\\": {
       \\"commands\\": [
-        \\"KPARTX_OUTPUT=$( kpartx -v -a \\\\\\"$EXTRACTED_IMAGE\\\\\\" )\\",
-        \\"BOOT_DISK=$( echo $KPARTX_OUTPUT | grep -o 'loop.p1' )\\",
-        \\"ROOT_DISK=$( echo $KPARTX_OUTPUT | grep -o 'loop.p2' )\\",
-        \\"mkdir -p $SDCARD_MOUNT\\",
-        \\"mount /dev/mapper/\${BOOT_DISK} $SDCARD_MOUNT\\",
-        \\"echo \\\\\\"\\\\nctrl_interface=DIR=/var/run/wpa_suplicant GROUP=netdev\\\\nupdate_config=1\\\\ncountry=$WIFI_COUNTRY\\\\n\\\\nnetwork={\\\\n    ssid=\\\\\\\\\\\\\\"$WIFI_SSID\\\\\\\\\\\\\\"\\\\n    psk=\\\\\\\\\\\\\\"$WIFI_PASSWORD\\\\\\\\\\\\\\"\\\\n}\\\\\\" > \\\\\\"$SDCARD_MOUNT/wpa_supplicant.conf\\\\\\"\\",
-        \\"touch \\\\\\"$SDCARD_MOUNT/ssh\\\\\\"\\",
-        \\"cp -v firstboot.sh \\\\\\"$SDCARD_MOUNT/firstboot.sh\\\\\\"\\",
-        \\"umount \\\\\\"$SDCARD_MOUNT\\\\\\"\\",
-        \\"mount /dev/mapper/\${ROOT_DISK} $SDCARD_MOUNT\\",
-        \\"sed -e 's;^#PasswordAuthentication.*$;PasswordAuthentication no;g' -e 's;^PermitRootLogin .*$;PermitRootLogin no;g' -i \\\\\\"$SDCARD_MOUNT/etc/ssh/sshd_config\\\\\\"\\",
-        \\"mkdir \\\\\\"$SDCARD_MOUNT/home/pi/.ssh\\\\\\"\\",
-        \\"chmod 0700 \\\\\\"$SDCARD_MOUNT/home/pi/.ssh\\\\\\"\\",
-        \\"chown 1000:1000 \\\\\\"$SDCARD_MOUNT/home/pi/.ssh\\\\\\"\\",
-        \\"echo $SSH_PUBLIC_KEY >> \\\\\\"$SDCARD_MOUNT/home/pi/.ssh/authorized_keys\\\\\\"\\",
-        \\"chown 1000:1000 \\\\\\"$SDCARD_MOUNT/home/pi/.ssh/authorized_keys\\\\\\"\\",
-        \\"chmod 0600 \\\\\\"$SDCARD_MOUNT/home/pi/.ssh/authorized_keys\\\\\\"\\",
-        \\"cp -rv \\\\\\"aws-iot-fleet-provisioning\\\\\\" \\\\\\"$SDCARD_MOUNT/etc/\\\\\\"\\",
-        \\"cp -v firstboot.service \\\\\\"$SDCARD_MOUNT/lib/systemd/system/firstboot.service\\\\\\"\\",
-        \\"cd \\\\\\"$SDCARD_MOUNT/etc/systemd/system/multi-user.target.wants\\\\\\" && ln -s \\\\\\"/lib/systemd/system/firstboot.service\\\\\\" \\\\\\"./firstboot.service\\\\\\"\\",
-        \\"cd -\\",
-        \\"umount \\\\\\"$SDCARD_MOUNT\\\\\\"\\",
-        \\"cp -v $EXTRACTED_IMAGE $ARTIFACT_IMAGE_NAME\\"
+        \\"./build-rpi-image.bash\\"
       ]
     }
   },
@@ -253,66 +729,12 @@ Object {
     ]
   }
 }",
-          "Location": Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                Object {
-                  "Ref": "ProvisioningArtifactsBucket9E4218B1",
-                },
-                "/provisioning-client.zip",
-              ],
-            ],
-          },
-          "Type": "S3",
+          "Type": "CODEPIPELINE",
         },
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "CreateRPIImageEventsRole489A6445": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "events.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "CreateRPIImageEventsRoleDefaultPolicy7D3F5AB0": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "codebuild:StartBuild",
-              "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "CreateRPIImageD7D4E5DA",
-                  "Arn",
-                ],
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "CreateRPIImageEventsRoleDefaultPolicy7D3F5AB0",
-        "Roles": Array [
-          Object {
-            "Ref": "CreateRPIImageEventsRole489A6445",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "CreateRPIImageRole06E6A7A9": Object {
+    "BuildRpiImageProjectRole25C801ED": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -329,73 +751,10 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "CreateRPIImageRoleDefaultPolicy4FBAD1B3": Object {
+    "BuildRpiImageProjectRoleDefaultPolicy00916D55": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
-            Object {
-              "Action": Array [
-                "s3:GetObject*",
-                "s3:GetBucket*",
-                "s3:List*",
-              ],
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "ProvisioningArtifactsBucket9E4218B1",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "ProvisioningArtifactsBucket9E4218B1",
-                          "Arn",
-                        ],
-                      },
-                      "/*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": Array [
-                "s3:GetObject*",
-                "s3:GetBucket*",
-                "s3:List*",
-                "s3:DeleteObject*",
-                "s3:PutObject*",
-                "s3:Abort*",
-              ],
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "ProvisioningArtifactsBucket9E4218B1",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "ProvisioningArtifactsBucket9E4218B1",
-                          "Arn",
-                        ],
-                      },
-                      "/*",
-                    ],
-                  ],
-                },
-              ],
-            },
             Object {
               "Action": Array [
                 "logs:CreateLogGroup",
@@ -422,7 +781,7 @@ Object {
                       },
                       ":log-group:/aws/codebuild/",
                       Object {
-                        "Ref": "CreateRPIImageD7D4E5DA",
+                        "Ref": "BuildRpiImageProject8E27C755",
                       },
                     ],
                   ],
@@ -445,7 +804,7 @@ Object {
                       },
                       ":log-group:/aws/codebuild/",
                       Object {
-                        "Ref": "CreateRPIImageD7D4E5DA",
+                        "Ref": "BuildRpiImageProject8E27C755",
                       },
                       ":*",
                     ],
@@ -480,7 +839,7 @@ Object {
                     },
                     ":report-group/",
                     Object {
-                      "Ref": "CreateRPIImageD7D4E5DA",
+                      "Ref": "BuildRpiImageProject8E27C755",
                     },
                     "-*",
                   ],
@@ -514,115 +873,119 @@ Object {
                 ],
               },
             },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "CreateRPIImageRoleDefaultPolicy4FBAD1B3",
-        "Roles": Array [
-          Object {
-            "Ref": "CreateRPIImageRole06E6A7A9",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "ProvisioningArtifactsBucket9E4218B1": Object {
-      "DeletionPolicy": "Retain",
-      "Properties": Object {
-        "BucketEncryption": Object {
-          "ServerSideEncryptionConfiguration": Array [
             Object {
-              "ServerSideEncryptionByDefault": Object {
-                "SSEAlgorithm": "AES256",
-              },
-            },
-          ],
-        },
-        "PublicAccessBlockConfiguration": Object {
-          "BlockPublicAcls": true,
-          "BlockPublicPolicy": true,
-          "IgnorePublicAcls": true,
-          "RestrictPublicBuckets": true,
-        },
-      },
-      "Type": "AWS::S3::Bucket",
-      "UpdateReplacePolicy": "Retain",
-    },
-    "ProvisioningArtifactsBucketCreateRPIImageOnProvisioningClientUpdateDF3A9FC5": Object {
-      "Properties": Object {
-        "EventPattern": Object {
-          "detail": Object {
-            "eventName": Array [
-              "CompleteMultipartUpload",
-              "CopyObject",
-              "PutObject",
-            ],
-            "requestParameters": Object {
-              "bucketName": Array [
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
                 Object {
-                  "Ref": "ProvisioningArtifactsBucket9E4218B1",
+                  "Fn::GetAtt": Array [
+                    "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
+                    "Arn",
+                  ],
                 },
-              ],
-              "key": Array [
-                "provisioning-client.zip",
-              ],
-            },
-            "resources": Object {
-              "ARN": Array [
                 Object {
                   "Fn::Join": Array [
                     "",
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "ProvisioningArtifactsBucket9E4218B1",
+                          "BuildRpiImagePipelineArtifactsBucketC0B23EB0",
                           "Arn",
                         ],
                       },
-                      "/provisioning-client.zip",
+                      "/*",
                     ],
                   ],
                 },
               ],
             },
-          },
-          "detail-type": Array [
-            "AWS API Call via CloudTrail",
           ],
-          "source": Array [
-            "aws.s3",
-          ],
+          "Version": "2012-10-17",
         },
-        "State": "ENABLED",
-        "Targets": Array [
+        "PolicyName": "BuildRpiImageProjectRoleDefaultPolicy00916D55",
+        "Roles": Array [
           Object {
-            "Arn": Object {
-              "Fn::GetAtt": Array [
-                "CreateRPIImageD7D4E5DA",
-                "Arn",
-              ],
-            },
-            "Id": "Target0",
-            "RoleArn": Object {
-              "Fn::GetAtt": Array [
-                "CreateRPIImageEventsRole489A6445",
-                "Arn",
-              ],
-            },
+            "Ref": "BuildRpiImageProjectRole25C801ED",
           },
         ],
       },
-      "Type": "AWS::Events::Rule",
+      "Type": "AWS::IAM::Policy",
     },
-    "ProvisioningFunctionD0324FE8": Object {
+    "ConfigureRpiImageBuilderCR": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "BOOTSTRAP_POLICY_NAME": Object {
+          "Ref": "BootstrapPolicy",
+        },
+        "CONFIGURED_RPI_IMAGE_BUILDER_BUCKET_NAME": Object {
+          "Ref": "rpiImageBuilderSourceBucket3B1B047A",
+        },
+        "CONFIGURED_RPI_IMAGE_BUILDER_OBJECT_KEY": "rpi-image-builder.zip",
+        "PROVISIONING_TEMPLATE_NAME": Object {
+          "Ref": "ProvisioningTemplate",
+        },
+        "RPI_IMAGE_BUILDER_BUCKET_NAME": Object {
+          "Ref": "AssetParametersfa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7S3Bucket769C4375",
+        },
+        "RPI_IMAGE_BUILDER_OBJECT_KEY": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              Object {
+                "Fn::Select": Array [
+                  0,
+                  Object {
+                    "Fn::Split": Array [
+                      "||",
+                      Object {
+                        "Ref": "AssetParametersfa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7S3VersionKeyDE2B75FE",
+                      },
+                    ],
+                  },
+                ],
+              },
+              Object {
+                "Fn::Select": Array [
+                  1,
+                  Object {
+                    "Fn::Split": Array [
+                      "||",
+                      Object {
+                        "Ref": "AssetParametersfa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7S3VersionKeyDE2B75FE",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          ],
+        },
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "ConfigureRpiImageBuilderProviderframeworkonEventAC61CC8C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ConfigureRpiImageBuilderFunction30F5701A": Object {
       "DependsOn": Array [
-        "ProvisioningFunctionServiceRoleDefaultPolicyE8C953B9",
-        "ProvisioningFunctionServiceRole902A5DA9",
+        "ConfigureRpiImageBuilderFunctionServiceRoleDefaultPolicyDB1E741D",
+        "ConfigureRpiImageBuilderFunctionServiceRole153D3C6D",
       ],
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameters6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1dS3Bucket261499BD",
+            "Ref": "AssetParameters905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133S3BucketAE038D3F",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -635,7 +998,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1dS3VersionKeyCF8B7304",
+                          "Ref": "AssetParameters905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133S3VersionKeyC8B59851",
                         },
                       ],
                     },
@@ -648,7 +1011,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters6b43763b10a343964ddf8aec2e41a0a104582c542ed18d507bfc6eba1c467b1dS3VersionKeyCF8B7304",
+                          "Ref": "AssetParameters905bd0b2aa0d2d29b9a96032e907debc7a708461559d10ae79a728b6dabd7133S3VersionKeyC8B59851",
                         },
                       ],
                     },
@@ -661,7 +1024,7 @@ Object {
         "Handler": "app.on_event",
         "Role": Object {
           "Fn::GetAtt": Array [
-            "ProvisioningFunctionServiceRole902A5DA9",
+            "ConfigureRpiImageBuilderFunctionServiceRole153D3C6D",
             "Arn",
           ],
         },
@@ -670,7 +1033,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "ProvisioningFunctionServiceRole902A5DA9": Object {
+    "ConfigureRpiImageBuilderFunctionServiceRole153D3C6D": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -701,7 +1064,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "ProvisioningFunctionServiceRoleDefaultPolicyE8C953B9": Object {
+    "ConfigureRpiImageBuilderFunctionServiceRoleDefaultPolicyDB1E741D": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -726,7 +1089,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "ProvisioningArtifactsBucket9E4218B1",
+                    "rpiImageBuilderSourceBucket3B1B047A",
                     "Arn",
                   ],
                 },
@@ -736,7 +1099,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "ProvisioningArtifactsBucket9E4218B1",
+                          "rpiImageBuilderSourceBucket3B1B047A",
                           "Arn",
                         ],
                       },
@@ -764,7 +1127,7 @@ Object {
                       },
                       ":s3:::",
                       Object {
-                        "Ref": "AssetParameterse32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7bS3Bucket6B889BA7",
+                        "Ref": "AssetParametersfa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7S3Bucket769C4375",
                       },
                     ],
                   ],
@@ -779,7 +1142,7 @@ Object {
                       },
                       ":s3:::",
                       Object {
-                        "Ref": "AssetParameterse32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7bS3Bucket6B889BA7",
+                        "Ref": "AssetParametersfa5e4ce2f1a38b166ce8d54e19fad00c2a423ce792311c70a1101e1df64746f7S3Bucket769C4375",
                       },
                       "/*",
                     ],
@@ -790,10 +1153,134 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "ProvisioningFunctionServiceRoleDefaultPolicyE8C953B9",
+        "PolicyName": "ConfigureRpiImageBuilderFunctionServiceRoleDefaultPolicyDB1E741D",
         "Roles": Array [
           Object {
-            "Ref": "ProvisioningFunctionServiceRole902A5DA9",
+            "Ref": "ConfigureRpiImageBuilderFunctionServiceRole153D3C6D",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ConfigureRpiImageBuilderProviderframeworkonEventAC61CC8C": Object {
+      "DependsOn": Array [
+        "ConfigureRpiImageBuilderProviderframeworkonEventServiceRoleDefaultPolicy06477CC6",
+        "ConfigureRpiImageBuilderProviderframeworkonEventServiceRole586AA64D",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3BucketEAC9DD43",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3VersionKeyDD9AE9E7",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3VersionKeyDD9AE9E7",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (TestStack/ConfigureRpiImageBuilderProvider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "ConfigureRpiImageBuilderFunction30F5701A",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ConfigureRpiImageBuilderProviderframeworkonEventServiceRole586AA64D",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs10.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ConfigureRpiImageBuilderProviderframeworkonEventServiceRole586AA64D": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ConfigureRpiImageBuilderProviderframeworkonEventServiceRoleDefaultPolicy06477CC6": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ConfigureRpiImageBuilderFunction30F5701A",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ConfigureRpiImageBuilderProviderframeworkonEventServiceRoleDefaultPolicy06477CC6",
+        "Roles": Array [
+          Object {
+            "Ref": "ConfigureRpiImageBuilderProviderframeworkonEventServiceRole586AA64D",
           },
         ],
       },
@@ -896,297 +1383,52 @@ Object {
       },
       "Type": "AWS::IoT::ProvisioningTemplate",
     },
-    "RPIArtifactsBucketCloudTrailD06CE695": Object {
-      "DependsOn": Array [
-        "RPIArtifactsBucketCloudTrailS3Policy6381C521",
-      ],
+    "RpiImageOutputBucketC16CAC8A": Object {
+      "DeletionPolicy": "Retain",
       "Properties": Object {
-        "EnableLogFileValidation": true,
-        "EventSelectors": Array [
-          Object {
-            "DataResources": Array [
-              Object {
-                "Type": "AWS::S3::Object",
-                "Values": Array [
-                  Object {
-                    "Fn::Join": Array [
-                      "",
-                      Array [
-                        Object {
-                          "Fn::GetAtt": Array [
-                            "ProvisioningArtifactsBucket9E4218B1",
-                            "Arn",
-                          ],
-                        },
-                        "/provisioning-client.zip",
-                      ],
-                    ],
-                  },
-                ],
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
+            Object {
+              "ServerSideEncryptionByDefault": Object {
+                "SSEAlgorithm": "AES256",
               },
-            ],
-            "ReadWriteType": "WriteOnly",
-          },
-        ],
-        "IncludeGlobalServiceEvents": true,
-        "IsLogging": true,
-        "IsMultiRegionTrail": true,
-        "S3BucketName": Object {
-          "Ref": "RPIArtifactsBucketCloudTrailS3EA748604",
+            },
+          ],
+        },
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
         },
       },
-      "Type": "AWS::CloudTrail::Trail",
-    },
-    "RPIArtifactsBucketCloudTrailS3EA748604": Object {
-      "DeletionPolicy": "Retain",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
-    "RPIArtifactsBucketCloudTrailS3Policy6381C521": Object {
+    "rpiImageBuilderSourceBucket3B1B047A": Object {
+      "DeletionPolicy": "Retain",
       "Properties": Object {
-        "Bucket": Object {
-          "Ref": "RPIArtifactsBucketCloudTrailS3EA748604",
-        },
-        "PolicyDocument": Object {
-          "Statement": Array [
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
             Object {
-              "Action": "s3:GetBucketAcl",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "cloudtrail.amazonaws.com",
-              },
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "RPIArtifactsBucketCloudTrailS3EA748604",
-                  "Arn",
-                ],
-              },
-            },
-            Object {
-              "Action": "s3:PutObject",
-              "Condition": Object {
-                "StringEquals": Object {
-                  "s3:x-amz-acl": "bucket-owner-full-control",
-                },
-              },
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "cloudtrail.amazonaws.com",
-              },
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    Object {
-                      "Fn::GetAtt": Array [
-                        "RPIArtifactsBucketCloudTrailS3EA748604",
-                        "Arn",
-                      ],
-                    },
-                    "/AWSLogs/",
-                    Object {
-                      "Ref": "AWS::AccountId",
-                    },
-                    "/*",
-                  ],
-                ],
+              "ServerSideEncryptionByDefault": Object {
+                "SSEAlgorithm": "AES256",
               },
             },
           ],
-          "Version": "2012-10-17",
+        },
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "VersioningConfiguration": Object {
+          "Status": "Enabled",
         },
       },
-      "Type": "AWS::S3::BucketPolicy",
-    },
-    "ThingsProvisioningCR": Object {
-      "DeletionPolicy": "Delete",
-      "DependsOn": Array [
-        "CreateRPIImageEventsRoleDefaultPolicy7D3F5AB0",
-        "CreateRPIImageEventsRole489A6445",
-        "CreateRPIImageD7D4E5DA",
-        "CreateRPIImageRoleDefaultPolicy4FBAD1B3",
-        "CreateRPIImageRole06E6A7A9",
-      ],
-      "Properties": Object {
-        "BOOTSTRAP_POLICY_NAME": Object {
-          "Ref": "BootstrapPolicy",
-        },
-        "PROVISIONING_ARTIFACTS_BUCKET_NAME": Object {
-          "Ref": "ProvisioningArtifactsBucket9E4218B1",
-        },
-        "PROVISIONING_CLIENT_ARCHIVE_NAME": "provisioning-client.zip",
-        "PROVISIONING_CLIENT_BUCKET_NAME": Object {
-          "Ref": "AssetParameterse32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7bS3Bucket6B889BA7",
-        },
-        "PROVISIONING_CLIENT_OBJECT_KEY": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              Object {
-                "Fn::Select": Array [
-                  0,
-                  Object {
-                    "Fn::Split": Array [
-                      "||",
-                      Object {
-                        "Ref": "AssetParameterse32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7bS3VersionKey09370F35",
-                      },
-                    ],
-                  },
-                ],
-              },
-              Object {
-                "Fn::Select": Array [
-                  1,
-                  Object {
-                    "Fn::Split": Array [
-                      "||",
-                      Object {
-                        "Ref": "AssetParameterse32fca9cdc70359b114592f7306985a67b39850363a24c5da9547cde2dd81f7bS3VersionKey09370F35",
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          ],
-        },
-        "PROVISIONING_TEMPLATE_NAME": Object {
-          "Ref": "ProvisioningTemplate",
-        },
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "ThingsProvisioningProviderframeworkonEventF4A44D65",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::CloudFormation::CustomResource",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "ThingsProvisioningProviderframeworkonEventF4A44D65": Object {
-      "DependsOn": Array [
-        "ThingsProvisioningProviderframeworkonEventServiceRoleDefaultPolicy202B29D2",
-        "ThingsProvisioningProviderframeworkonEventServiceRoleCA5C99F8",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Ref": "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3BucketEAC9DD43",
-          },
-          "S3Key": Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                Object {
-                  "Fn::Select": Array [
-                    0,
-                    Object {
-                      "Fn::Split": Array [
-                        "||",
-                        Object {
-                          "Ref": "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3VersionKeyDD9AE9E7",
-                        },
-                      ],
-                    },
-                  ],
-                },
-                Object {
-                  "Fn::Select": Array [
-                    1,
-                    Object {
-                      "Fn::Split": Array [
-                        "||",
-                        Object {
-                          "Ref": "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3VersionKeyDD9AE9E7",
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            ],
-          },
-        },
-        "Description": "AWS CDK resource provider framework - onEvent (TestStack/ThingsProvisioningProvider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "ProvisioningFunctionD0324FE8",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.onEvent",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "ThingsProvisioningProviderframeworkonEventServiceRoleCA5C99F8",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs10.x",
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "ThingsProvisioningProviderframeworkonEventServiceRoleCA5C99F8": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "ThingsProvisioningProviderframeworkonEventServiceRoleDefaultPolicy202B29D2": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "ProvisioningFunctionD0324FE8",
-                  "Arn",
-                ],
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "ThingsProvisioningProviderframeworkonEventServiceRoleDefaultPolicy202B29D2",
-        "Roles": Array [
-          Object {
-            "Ref": "ThingsProvisioningProviderframeworkonEventServiceRoleCA5C99F8",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
     },
     "thingsPolicy": Object {
       "Properties": Object {
