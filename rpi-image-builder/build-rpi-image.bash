@@ -7,10 +7,6 @@ RASPBIAN_SOURCE_URL="https://downloads.raspberrypi.org/raspbian_latest"
 RASPBIAN_URL_BASE="https://downloads.raspberrypi.org/raspbian/images/"
 SDCARD_MOUNT="/mnt/sdcard"
 
-# Install dependencies
-apt-get update
-apt-get -y install p7zip-full wget libxml2-utils kpartx
-
 # Download raspbian, unzip it and SHA verify the download
 wget $RASPBIAN_SOURCE_URL -O $RASPBIAN_DOWNLOAD_FILENAME
 VERSION="$( wget -q $RASPBIAN_URL_BASE -O - | xmllint --html --xmlout --xpath 'string(/html/body/table/tr[last()-1]/td/a/@href)' - )"
