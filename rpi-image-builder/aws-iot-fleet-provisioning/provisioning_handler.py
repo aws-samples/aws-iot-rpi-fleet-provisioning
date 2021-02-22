@@ -4,9 +4,6 @@
 # ------------------------------------------------------------------------------
 # Demonstrates how to call/orchestrate AWS fleet provisioning services
 #  with a provided bootstrap certificate (aka - provisioning claim cert).
-#   
-# Initial version - Raleigh Murch, AWS
-# email: murchral@amazon.com
 # ------------------------------------------------------------------------------
 
 from awscrt import io, mqtt, auth, http

@@ -41,7 +41,7 @@ IOT_ENDPOINT = {get_iot_endpoint()}
 
 # Include the name for the provisioning template that was created in IoT Core
 PRODUCTION_TEMPLATE = {provisioning_template_name}
-# TODO: Implement cert rotation
+# Cert rotation not implemented
 CERT_ROTATION_TEMPLATE = dummy-template-name
 """
 
@@ -61,12 +61,12 @@ def create_configured_rpi_image_builder_archive(
         Key=rpi_image_builder_object_key,
     )
 
-    with io.BytesIO(rpi_image_builder_object['Body'].read()) as tf:
+    with io.BytesIO(rpi_image_builder_object['Body'].read()) as rpi_image_builder_archive:
         # rewind the file
-        tf.seek(0)
+        rpi_image_builder_archive.seek(0)
 
         logger.info("Adding claim certificate and configuration to rpi image builder archive")
-        with zipfile.ZipFile(tf, mode='a') as zipf:
+        with zipfile.ZipFile(rpi_image_builder_archive, mode='a') as zipf:
             zipf.writestr(f'{CERTS_FOLDER}/{CERT_FILENAME}',
                           claim_certificate['certificatePem'])
             zipf.writestr(f'{CERTS_FOLDER}/{KEY_FILENAME}',
@@ -74,13 +74,13 @@ def create_configured_rpi_image_builder_archive(
             zipf.writestr(CONFIG_LOCATION, config)
 
         # rewind the file
-        tf.seek(0)
+        rpi_image_builder_archive.seek(0)
 
         logger.info("Uploading configured rpi image builder archive to s3")
         s3_client.put_object(
             Bucket=configured_rpi_image_builder_bucket_name,
             Key=configured_rpi_image_builder_object_key,
-            Body=tf
+            Body=rpi_image_builder_archive
         )
 
 
@@ -124,6 +124,10 @@ def configure_rpi_image_builder(
 
 
 def on_event(event, context):
+    """
+    Function that configures the raspberry pi image builder and stores it on S3.
+    Triggered when the corresponding custom resource gets updated.
+    """
     logger.info(f'New event {json.dumps(event, indent=2)}')
 
     fleet_provisioning_policy_name = event['ResourceProperties']['FLEET_PROVISIONING_POLICY_NAME']

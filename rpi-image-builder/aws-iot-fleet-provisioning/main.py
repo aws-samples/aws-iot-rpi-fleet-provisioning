@@ -20,10 +20,6 @@
 #	   6) The provisioning template executes the instructions provided and the process rotates to the new certificate.
 #      7) Using the new certificate, a pub/sub call is demonstrated on a previously forbidden topic to test the new certificate.
 #      8) New certificates are saved locally, and can be stored/consumed as the application deems necessary.
-#
-#
-# Initial version - Raleigh Murch, AWS
-# email: murchral@amazon.com
 # ------------------------------------------------------------------------------
 
 import argparse
