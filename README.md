@@ -52,9 +52,9 @@ yarn cdk deploy '*'
 
 ## 🛠 Usage
 
-The CDK stack creates a [Codebuild](https://aws.amazon.com/codebuild/) project which builds the custom raspbian image and stores it in [S3](https://aws.amazon.com/s3/).
+The CDK stack creates a [CodePipeline](https://aws.amazon.com/codepipeline/) which builds the custom raspbian image and stores it in [S3](https://aws.amazon.com/s3/).
 
-Once the stack is deployed, you can check the progress of the Codebuild project in the AWS console. Once the build is completed, download the custom raspbian image from S3 (Check the "Artifacts upload location" in the Codebuild project to find the S3 bucket).
+Once the stack is deployed, you can check the progress of the pipeline in the AWS console. Once the pipeline is completed, download the custom raspbian image from S3 (Check the "Artifacts upload location" in the Codebuild project to find the S3 bucket).
 
 ![Artifacts upload location](images/codebuild_artifact_location.png)
 
@@ -69,7 +69,7 @@ diskutil unmountDisk /dev/disk123abcd
 sudo dd bs=1m if=aws-raspbian.img of=/dev/disk123abcd conv=sync
 ```
 
-A Raspberry Pi booting using this image will automatically requests a fully functional identity on first boot with the necessary IoT permissions that the device can use for subsequent communication with AWS IoT Core (see [provisioning-client/firstboot.sh](provisioning-client/firstboot.sh)).
+A Raspberry Pi booting using this image will automatically requests a fully functional identity on first boot with the necessary IoT permissions that the device can use for subsequent communication with AWS IoT Core (see [rpi-image-builder/firstboot.bash](rpi-image-builder/firstboot.bash)).
 
 ![AWS IoT Core console](images/iot_core.png)
 
