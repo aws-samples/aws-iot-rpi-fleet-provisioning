@@ -12,27 +12,27 @@
     "cdk": "cdk"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.87.0",
+    "@aws-cdk/assert": "1.96.0",
     "@types/jest": "^26.0.10",
     "@types/node": "10.17.27",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
-    "aws-cdk": "1.87.0",
+    "aws-cdk": "1.96.0",
     "ts-node": "^9.0.0",
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "@aws-cdk/core": "1.87.0",
-    "@aws-cdk/aws-codebuild": "1.87.0",
-    "@aws-cdk/aws-codepipeline": "1.87.0",
-    "@aws-cdk/aws-codepipeline-actions": "1.87.0",
-    "@aws-cdk/aws-iam": "1.87.0",
-    "@aws-cdk/aws-iot": "1.87.0",
-    "@aws-cdk/aws-lambda": "1.87.0",
-    "@aws-cdk/aws-s3": "1.87.0",
-    "@aws-cdk/aws-s3-assets": "1.87.0",
-    "@aws-cdk/aws-secretsmanager": "1.87.0",
-    "@aws-cdk/custom-resources": "1.87.0",
+    "@aws-cdk/core": "1.96.0",
+    "@aws-cdk/aws-codebuild": "1.96.0",
+    "@aws-cdk/aws-codepipeline": "1.96.0",
+    "@aws-cdk/aws-codepipeline-actions": "1.96.0",
+    "@aws-cdk/aws-iam": "1.96.0",
+    "@aws-cdk/aws-iot": "1.96.0",
+    "@aws-cdk/aws-lambda": "1.96.0",
+    "@aws-cdk/aws-s3": "1.96.0",
+    "@aws-cdk/aws-s3-assets": "1.96.0",
+    "@aws-cdk/aws-secretsmanager": "1.96.0",
+    "@aws-cdk/custom-resources": "1.96.0",
     "source-map-support": "^0.5.16"
   }
 }
